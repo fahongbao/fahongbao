@@ -22,6 +22,6 @@
 [https://t.me/BitANTChinesecommunity](https://t.me/BitANTChinesecommunity)（[BitANT](https://optimistic.etherscan.io/token/0x5029c236320b8f15ef0a657054b84d90bfbeded3)是BitBTC协议的平台币）
 
 ## 合约地址
-BSC: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://www.bscscan.com/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
-MATIC: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://polygonscan.com/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
-Optimism: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://optimistic.etherscan.io/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
+- BSC: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://www.bscscan.com/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
+- MATIC: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://polygonscan.com/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
+- Optimism: [0x011a7b7AE1b7a4645c0341F980d0242e152Bf397](https://optimistic.etherscan.io/address/0x011a7b7AE1b7a4645c0341F980d0242e152Bf397)
