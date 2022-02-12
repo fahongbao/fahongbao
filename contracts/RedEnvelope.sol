@@ -36,7 +36,7 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
 
     mapping(bytes32 => Data) private _datas;
     mapping(bytes32 => bool) private _exists;
-    mapping(address => bool) private _isWhitelisted;
+    mapping(address => uint256) private _tokenIndexes;
     address[] private _whitelist;
     bool private _whitelistCanceled;
 
@@ -49,7 +49,7 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
 
     modifier onlyWhitelisted(address token) {
         require(
-            _whitelistCanceled || _isWhitelisted[token],
+            _whitelistCanceled || _tokenIndexes[token] > 0,
             "RedEnvelope: token error"
         );
         _;
@@ -64,8 +64,8 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
         _governance = governance_;
         emit SetGovernance(governance_);
 
-        _isWhitelisted[NATIVE_TOKEN] = true;
         _whitelist.push(NATIVE_TOKEN);
+        _tokenIndexes[NATIVE_TOKEN] = 1;
         emit AddToWhitelist(NATIVE_TOKEN);
     }
 
@@ -96,7 +96,7 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
             uint256 oldBalance = IERC20(token).balanceOf(self);
             IERC20(token).safeTransferFrom(account, self, amount);
             input = IERC20(token).balanceOf(self) - oldBalance;
-            require(input == amount, "RedEnvelope: transfer error");
+            amount = input;
         }
 
         Data storage data = _datas[id];
@@ -171,12 +171,31 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
     }
 
     function addToWhitelist(address token) external override onlyGovernance {
-        require(!_isWhitelisted[token], "RedEnvelope: added");
+        require(_tokenIndexes[token] == 0, "RedEnvelope: added");
 
         _whitelist.push(token);
-        _isWhitelisted[token] = true;
+        _tokenIndexes[token] = _whitelist.length;
 
         emit AddToWhitelist(token);
+    }
+
+    function revokeFromWhitelist(address token)
+        external
+        override
+        onlyGovernance
+    {
+        require(_tokenIndexes[token] > 0, "RedEnvelope: not yet");
+
+        uint256 index = _tokenIndexes[token] - 1;
+        uint256 lastIndex = _whitelist.length - 1;
+        address lastToken = _whitelist[lastIndex];
+        _whitelist[index] = lastToken;
+        _whitelist.pop();
+
+        _tokenIndexes[lastToken] = index + 1;
+        _tokenIndexes[token] = 0;
+
+        emit RevokeFromWhitelist(token);
     }
 
     function cancelWhitelist() external override onlyGovernance {
@@ -224,7 +243,7 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
         override
         returns (bool)
     {
-        return _isWhitelisted[token];
+        return _tokenIndexes[token] > 0;
     }
 
     function isWhitelistCanceled() external view override returns (bool) {
@@ -235,7 +254,6 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
         external
         view
         override
-        onlyExists(id)
         returns (
             address token,
             address creator,
@@ -249,18 +267,20 @@ contract RedEnvelope is IRedEnvelope, Context, EIP712 {
             bool refunded
         )
     {
-        Data storage data = _datas[id];
+        if (_exists[id]) {
+            Data storage data = _datas[id];
 
-        token = data.token;
-        creator = data.creator;
-        createAt = data.createAt;
-        amount = data.amount;
-        count = data.count;
-        random = data.random;
-        dispatched = data.dispatched;
-        dispatchedAmount = data.dispatchedAmount;
-        dispatchedCount = data.dispatchedCount;
-        refunded = data.refunded;
+            token = data.token;
+            creator = data.creator;
+            createAt = data.createAt;
+            amount = data.amount;
+            count = data.count;
+            random = data.random;
+            dispatched = data.dispatched;
+            dispatchedAmount = data.dispatchedAmount;
+            dispatchedCount = data.dispatchedCount;
+            refunded = data.refunded;
+        }
     }
 
     function _dispatch(

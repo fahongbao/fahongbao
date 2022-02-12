@@ -13,6 +13,7 @@ interface IRedEnvelope {
     event Dispatched(bytes32 id, address token, uint256 amount, uint256 count);
     event Refund(bytes32 id, address token, uint256 amount, address recipient);
     event AddToWhitelist(address token);
+    event RevokeFromWhitelist(address token);
     event SetGovernance(address governance_);
 
     function create(
@@ -41,6 +42,8 @@ interface IRedEnvelope {
     function refund(bytes32 id) external;
 
     function addToWhitelist(address token) external;
+
+    function revokeFromWhitelist(address token) external;
 
     function cancelWhitelist() external;
 
