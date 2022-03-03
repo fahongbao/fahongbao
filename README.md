@@ -22,7 +22,7 @@
 [https://bitbtc.money](https://bitbtc.money)
 
 ### 联系TG
-[@June_tsy](https://t.me/June_tsy)
+[@Leo0005](https://t.me/Leo0005)
 
 ### 社区TG
 [https://t.me/BitANTChinesecommunity](https://t.me/BitANTChinesecommunity)（[BitANT](https://optimistic.etherscan.io/token/0x5029c236320b8f15ef0a657054b84d90bfbeded3)是BitBTC协议的平台币）
@@ -56,7 +56,7 @@ Anyone who sends or receives a airdrop has a chance to get.
 [https://bitbtc.money](https://bitbtc.money)
 
 ### Contact
-[@June_tsy](https://t.me/June_tsy) (Telegram)
+[@Leo0005](https://t.me/Leo0005) (Telegram)
 
 ### Community Telegram
 [https://t.me/BitANTChinesecommunity](https://t.me/BitANTChinesecommunity) ([BitANT](https://optimistic.etherscan.io/token/0x5029c236320b8f15ef0a657054b84d90bfbeded3) is the platform token of BitBTC protocol)</p>
